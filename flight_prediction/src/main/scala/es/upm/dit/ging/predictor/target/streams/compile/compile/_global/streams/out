@@ -1,0 +1,103 @@
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:3:12: object mongodb is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.mongodb.scala._[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:4:12: object bson is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.bson._[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:6:12: object mongodb is not a member of package com[0m
+[0m[[0m[31merror[0m] [0m[0mimport com.mongodb.spark.MongoSpark[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:7:12: object mongodb is not a member of package com[0m
+[0m[[0m[31merror[0m] [0m[0mimport com.mongodb.spark.config.WriteConfig[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:8:12: object apache is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.ml.classification.RandomForestClassificationModel[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:9:12: object apache is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.ml.feature.{Bucketizer, StringIndexerModel, VectorAssembler}[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:10:12: object apache is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.sql.functions.{concat, from_json, lit}[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:11:12: object apache is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.sql.types.{DataTypes, StructType}[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:12:12: object apache is not a member of package org[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.sql.{DataFrame, SparkSession}[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:19:17: not found: value SparkSession[0m
+[0m[[0m[31merror[0m] [0m[0m    val spark = SparkSession[0m
+[0m[[0m[31merror[0m] [0m[0m                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:30:29: not found: value Bucketizer[0m
+[0m[[0m[31merror[0m] [0m[0m    val arrivalBucketizer = Bucketizer.load(arrivalBucketizerPath)[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:36:62: not found: value StringIndexerModel[0m
+[0m[[0m[31merror[0m] [0m[0m    val stringIndexerModel = stringIndexerModelPath.map{n => StringIndexerModel.load(n.toString)}[0m
+[0m[[0m[31merror[0m] [0m[0m                                                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:41:27: not found: value VectorAssembler[0m
+[0m[[0m[31merror[0m] [0m[0m    val vectorAssembler = VectorAssembler.load(vectorAssemblerPath)[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:46:15: not found: value RandomForestClassificationModel[0m
+[0m[[0m[31merror[0m] [0m[0m    val rfc = RandomForestClassificationModel.load(randomForestModelPath)[0m
+[0m[[0m[31merror[0m] [0m[0m              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:59:22: not found: type StructType[0m
+[0m[[0m[31merror[0m] [0m[0m    val struct = new StructType()[0m
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:60:22: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Origin", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:61:25: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("FlightNum", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:62:25: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("DayOfWeek", DataTypes.IntegerType)[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:63:25: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("DayOfYear", DataTypes.IntegerType)[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:64:26: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("DayOfMonth", DataTypes.IntegerType)[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:65:20: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Dest", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:66:24: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("DepDelay", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:67:26: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Prediction", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:68:25: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Timestamp", DataTypes.TimestampType)[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:69:26: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("FlightDate", DataTypes.DateType)[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:70:23: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Carrier", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:71:20: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("UUID", DataTypes.StringType)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:72:24: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Distance", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:73:29: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Carrier_index", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:74:28: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Origin_index", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:75:26: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Dest_index", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:76:27: not found: value DataTypes[0m
+[0m[[0m[31merror[0m] [0m[0m      .add("Route_index", DataTypes.DoubleType)[0m
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:116:67: value transform is not a member of Nothing[0m
+[0m[[0m[31merror[0m] [0m[0m    val predictionRequestsWithRoute = stringIndexerModel.map(n=>n.transform(predictionRequestsWithRouteMod))[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/MakePrediction.scala:145:23: not found: value WriteConfig[0m
+[0m[[0m[31merror[0m] [0m[0m    val writeConfig = WriteConfig(Map("uri" -> "mongodb://127.0.0.1:27017/agile_data_science.flight_delay_classification_response"))[0m
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m
+[0m[[0m[31merror[0m] [0m[0m34 errors found[0m

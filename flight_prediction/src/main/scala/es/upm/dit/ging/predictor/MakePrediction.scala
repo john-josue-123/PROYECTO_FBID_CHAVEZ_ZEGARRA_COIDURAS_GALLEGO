@@ -21,7 +21,7 @@ object MakePrediction {
     import spark.implicits._
 
     //Load the arrival delay bucketizer
-    val base_path= "/Users/admin/IdeaProjects/ging/practica_big_data_2019"
+    val base_path= "/home/jchavezz/Desktop/practica_big_data_2019"
     val arrivalBucketizerPath = "%s/models/arrival_bucketizer_2.0.bin".format(base_path)
     print(arrivalBucketizerPath.toString())
     val arrivalBucketizer = Bucketizer.load(arrivalBucketizerPath)
@@ -104,7 +104,7 @@ object MakePrediction {
       concat(
         flightFlattenedDf2("Origin"),
         lit('-'),
-        flightFlattenedDf2("Dest")
+      	  flightFlattenedDf2("Dest")
       )
     )
 
