@@ -1,37 +1,16 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+# ~/.profile: executed by Bourne-compatible login shells.
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-# >>> coursier install directory >>>
-export PATH="$PATH:/home/jchavezz/.local/share/coursier/bin"
-# <<< coursier install directory <<<
+mesg n 2> /dev/null || true
 
 export SPARK_HOME=/opt/spark
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export PYSPARK_PYTHON=/usr/bin/python3
+export PATH="$PATH:/root/.local/share:$SPARK_HOME/bin:$SPARK_HOME/sbin"
 export PROJECT_HOME=/home/jchavezz/Desktop/practica_big_data_2019
-export AIRFLOW_HOME=~/airflow
+export AIRFLOW_HOME=/home/jchavezz/Desktop/practica_big_data_2019/resources/airflow
