@@ -84,13 +84,13 @@ The following list includes some links with the installation procedure for each 
 
  - [Intellij](https://www.jetbrains.com/help/idea/installation-guide.html) (jdk_1.8)
  - [Pyhton3](https://realpython.com/installing-python/) (Suggested version 3.7) 
- - [PIP](https://pip.pypa.io/en/stable/installing/)
- - [SBT](https://www.scala-sbt.org/release/docs/Setup.html) 
- - [MongoDB](https://docs.mongodb.com/manual/installation/)
- - [Spark](https://spark.apache.org/docs/latest/) (Mandatory version 3.1.2)
- - [Scala](https://www.scala-lang.org)(Suggested version 2.12)
- - [Zookeeper](https://zookeeper.apache.org/releases.html)
- - [Kafka](https://kafka.apache.org/quickstart) (Mandatory version kafka_2.12-3.0.0)
+ - [PIP](https://ubunlog.com/pip-instalacion-conceptos-basicos-ubuntu-20-04/)
+ - [SBT](https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html) 
+ - [MongoDB](https://www.mongodb.com/docs/v4.2/tutorial/install-mongodb-on-ubuntu/)
+ - [Spark](https://archive.apache.org/dist/spark/) (Mandatory version 3.1.2)
+ - [Scala](https://docs.scala-lang.org/getting-started/index.html#using-the-scala-installer-recommended-way)(Suggested version 2.12)
+ - [Zookeeper](https://howtoinstall.co/es/zookeeper)
+ - [Kafka](https://hevodata.com/blog/how-to-install-kafka-on-ubuntu/)
  
  ### Install python libraries
  
@@ -102,20 +102,20 @@ The following list includes some links with the installation procedure for each 
  Open a console and go to the downloaded Kafka directory and run:
  
  ```
-   bin/zookeeper-server-start.sh config/zookeeper.properties
+   ~/kafka/bin/zookeeper-server-start.sh config/zookeeper.properties
   ```
   ### Start Kafka
   
   Open a console and go to the downloaded Kafka directory and run:
   
   ```
-    bin/kafka-server-start.sh config/server.properties
+    ~/kafka/bin/kafka-server-start.sh config/server.properties 
    ```
    open a new console in teh same directory and create a new topic :
   ```
-      bin/kafka-topics.sh \
+      ~/kafka/bin/kafka-topics.sh \
         --create \
-        --bootstrap-server localhost:9092 \
+        --zookeeper localhost:2181 \
         --replication-factor 1 \
         --partitions 1 \
         --topic flight_delay_classification_request
@@ -124,9 +124,10 @@ The following list includes some links with the installation procedure for each 
   ```
     Created topic "flight_delay_classification_request".
   ```
-  You can see the topic we created with the list topics command:
+   You can send an echo:
   ```
-      bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
+       echo "Asignatura FBID" | ~/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic flight_delay_classification_request > /dev/null
+  
   ```
   Output:
   ```
@@ -134,7 +135,7 @@ The following list includes some links with the installation procedure for each 
   ```
   (Optional) You can oen a new console with a consumer in order to see the messeges sent to that topic
   ```
-  bin/kafka-console-consumer.sh \
+ ~/kafka/bin/kafka-console-consumer.sh \
       --bootstrap-server localhost:9092 \
       --topic flight_delay_classification_request \
       --from-beginning
@@ -142,7 +143,9 @@ The following list includes some links with the installation procedure for each 
   ## Import the distance records to MongoDB
   Check if you have Mongo up and running:
   ```
-  service mongod status
+  1.- sudo systemctl start mongod
+  2.- service mongod status
+  3.- sudo systemctl enable mongod
   ```
   Output:
   ```
@@ -156,7 +159,7 @@ The following list includes some links with the installation procedure for each 
   
   oct 01 14:58:53 amunoz systemd[1]: Started MongoDB Database Server.
   ```
-  Run the import_distances.sh script
+  Run the import_distances.sh script in practica_big_data_2019 directory:
   ```
   ./resources/import_distances.sh
   ```
@@ -181,11 +184,11 @@ The following list includes some links with the installation procedure for each 
   ```
     cd practica_big_data_2019
   ```
-  Set the `JAVA_HOME` env variable with teh path of java installation directory, for example:
+  Set in root/.profile the `JAVA_HOME` env variable with teh path of java installation directory, for example:
   ```
     export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
   ```
-  Set the `SPARK_HOME` env variable with teh path of your Spark installation folder, for example:
+  Set in root/.profile the `SPARK_HOME` env variable with teh path of your Spark installation folder, for example:
   ```
     export SPARK_HOME=/opt/spark
   ```
@@ -208,16 +211,22 @@ The following list includes some links with the installation procedure for each 
   ``` 
   Then run the code using Intellij or spark-submit with their respective arguments. 
   
-Please, note that in order to use spark-submit you first need to compile the code and build a JAR file using sbt. Also, when running the spark-submit command, you have to add at least these two packages with the --packages option:
+Please, note that in order to use spark-submit you first need to compile the code and build a JAR file using sbt in flight_prediction directory: 
   ```
-  --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
+  1.- sbt compile
+  2.- sbt run 
+  3.- In another terminal: sbt package
+  ```
+Also, when running the spark-submit command form the "root", you have to add at least these two packages with the --packages option:
+  ```
+ spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
      
   ``` 
    Be carefull with the packages version because if you are using another version of spark, kafka or mongo you have to choose the correspondent version to your installation. This packages work with Spark 3.1.2, kafka_2.12-3.1.2 and mongo superior to 2.6
   
   ## Start the prediction request Web Application
   
-  Set the `PROJECT_HOME` env variable with teh path of you cloned repository, for example:
+  Set the `PROJECT_HOME` env variable in root/.profile with teh path of you cloned repository, for example:
    ```
   export PROJECT_HOME=/home/user/Desktop/practica_big_data_2019
    ```
@@ -279,6 +288,7 @@ airflow users create \
 ```
 - Start airflow scheduler and webserver
 ```shell
+airflow db init
 airflow webserver --port 8080
 airflow sheduler
 ```
