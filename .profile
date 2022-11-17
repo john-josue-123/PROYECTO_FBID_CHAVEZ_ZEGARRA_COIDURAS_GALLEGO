@@ -29,3 +29,9 @@ fi
 # >>> coursier install directory >>>
 export PATH="$PATH:/home/jchavezz/.local/share/coursier/bin"
 # <<< coursier install directory <<<
+
+export SPARK_HOME=/opt/spark
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export PYSPARK_PYTHON=/usr/bin/python3
+export PROJECT_HOME=/home/jchavezz/Desktop/practica_big_data_2019
+export AIRFLOW_HOME=~/airflow
