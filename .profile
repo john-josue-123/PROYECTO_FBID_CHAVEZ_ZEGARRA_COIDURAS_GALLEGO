@@ -1,4 +1,5 @@
-# ~/.profile: executed by Bourne-compatible login shells.
+# This is the text that I edit to compile the project, and this need to place in root user
+#~/.profile: executed by Bourne-compatible login shells.
 
 if [ "$BASH" ]; then
   if [ -f ~/.bashrc ]; then
