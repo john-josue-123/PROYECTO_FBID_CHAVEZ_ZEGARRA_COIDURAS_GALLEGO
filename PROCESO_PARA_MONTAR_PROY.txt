@@ -1,0 +1,517 @@
+UBUNTU
+
+####### Intellij (jdk_1.8)
+
+
+
+############################
+
+
+####### GIT:
+https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04-es
+
+1.- sudo apt update
+2.- sudo apt install git
+ 
+git --version
+
+sudo apt update
+sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
+
+############################
+
+
+####### SBT:
+https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
+
+Installing from SDKMAN
+1.- sdk install java $(sdk list java | grep -o "\b8\.[0-9]*\.[0-9]*\-tem" | head -1)
+2.- sdk install sbt
+
+Installing from a universal package 
+1.- sudo apt-get update
+2.- sudo apt-get install apt-transport-https curl gnupg -yqq
+3.- echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+4.- echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+5.- curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo -H gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import
+6.- sudo chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg
+7.- sudo apt-get update
+8.- sudo apt-get install sbt
+
+
+####### Pyhton3 (Suggested version 3.7)
+
+1.- sudo add-apt-repository ppa:deadsnakes/ppa
+2.- sudo apt-get update
+3.- sudo apt-get install python3.7
+
+To check if python is installed type python3.7 else:
+
+sudo ln -fs /opt/Python-3.7.0/Python /usr/bin/python3.7
+
+
+############################
+
+
+
+####### PIP:
+https://ubunlog.com/pip-instalacion-conceptos-basicos-ubuntu-20-04/
+
+1.- sudo apt update && sudo apt install python3-pip
+2.- sudo add-apt-repository universe
+3.- sudo apt update
+4.- curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+
+############################
+
+####### MONGO DB: Version usada 4.2
+https://www.mongodb.com/docs/v4.2/tutorial/install-mongodb-on-ubuntu/
+
+1.- sudo apt-get install gnupg
+2.- wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+3.- echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+4.- sudo apt-get update
+5.- sudo apt-get install -y mongodb-org
+6.- echo "mongodb-org hold" | sudo dpkg --set-selections
+echo "mongodb-org-database hold" | sudo dpkg --set-selections
+echo "mongodb-org-server hold" | sudo dpkg --set-selections
+echo "mongodb-mongosh hold" | sudo dpkg --set-selections
+echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+7.-sudo systemctl start mongod ########## ACTIVAR MongoDB
+
+Verify:
+sudo systemctl status mongod
+sudo systemctl enable mongod
+sudo systemctl stop mongod
+sudo systemctl restart mongod
+mongosh
+
+c
+Uninstall MongoDB Community Edition:
+sudo service mongod stop
+sudo apt-get purge mongodb-org*
+sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb
+
+
+https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04-es
+
+
+
+############################
+
+
+
+####### zookeeper:
+https://howtoinstall.co/es/zookeeper
+
+1.- sudo apt-get update
+2.- sudo apt-get install zookeeper
+
+############################
+
+
+
+####### KAFKA:  (Mandatory version kafka_2.12-3.0.0)
+
+https://noviello.it/es/como-instalar-apache-kafka-en-ubuntu-18-04-lts/
+https://hevodata.com/blog/how-to-install-kafka-on-ubuntu/
+
+** Step 1: Install Java and Bookeeper
+
+Kafka is written in Java and Scala and requires jre 1.7 and above to run it. In this step, you need to ensure Java is installed.
+1.- sudo apt-get update
+2.- sudo apt-get install default-jre
+3.- sudo apt-get install zookeeperd
+4.- telnet localhost 2181 ### check if Zookeeper is alive and if it’s OK
+	ruok #### You will have to enter
+	imok ####(are you okay) if it’s all okay it will end the telnet session and reply with
+
+** Step 2: Create a Service User for Kafka
+
+5.- sudo adduser kafka
+6.- sudo adduser kafka sudo
+7.- su -l kafka  ############## PARA INGRESAR A KAFKA
+7.1.- sudo apt-get update && sudo apt-get install curl
+8.- curl "https://downloads.apache.org/kafka/2.8.2/kafka_2.12-2.8.2.tgz" -o ~/Downloads/kafka.tgz
+
+** Step 3: Download Apache Kafka
+
+9.- mkdir ~/kafka && cd ~/kafka
+10.- tar -xvzf ~/Downloads/kafka.tgz --strip 1 ### –strip 1 is used to ensure that the archived data is extracted in ~/kafka/.
+
+** Step 4: Configuring Kafka Server
+
+The server.properties file specifies Kafka’s configuration options. Use nano or your favorite editor to open this file:
+11.- nano ~/kafka/config/server.properties
+#### Add a setting that allows us to delete Kafka topics first. Add the following to the file’s bottom:
+12.- delete.topic.enable = true
+#### Now change the directory for storing logs:
+13.- log.dirs=/home/kafka/logs  #### Save and Close the file
+
+Step 5: Setting Up Kafka Systemd Unit Files
+
+Create systemd unit file for Zookeeper with below command:
+14.- sudo nano /etc/systemd/system/zookeeper.service
+
+[Unit]
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User=kafka
+ExecStart=/home/kafka/kafka/bin/zookeeper-server-start.sh /home/kafka/kafka/config/zookeeper.properties
+ExecStop=/home/kafka/kafka/bin/zookeeper-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
+
+15.- sudo nano /etc/systemd/system/kafka.service
+
+[Unit]
+ Requires=zookeeper.service
+ After=zookeeper.service
+
+ [Service]
+ Type=simple
+ User=kafka
+ ExecStart=/bin/sh -c '/home/kafka/kafka/bin/kafka-server-start.sh /home/kafka/kafka/config/server.properties > /home/kafka/kafka/kafka.log 2>&1'
+ ExecStop=/home/kafka/kafka/bin/kafka-server-stop.sh
+ Restart=on-abnormal
+
+ [Install]
+ WantedBy=multi-user.target
+
+
+To check the service:
+sudo systemctl start kafka
+sudo journalctl -u kafka
+
+
+sudo systemctl enable zookeeper
+sudo systemctl enable kafka
+
+
+"Socket server failed to bind to 0.0.0.0:9092:Address already inuse" 
+
+# lsof -n -i :9092 | grep LISTEN
+java 7812 root 205u IPv6 60200 0t0 TCP *:webcache (LISTEN)
+# kill -9 7812
+
+############################
+
+
+
+####### SPARK (Mandatory version 3.1.2) --- CON INTERFAZ GRAFICA
+
+https://spark.apache.org/downloads.html
+https://archive.apache.org/dist/spark/
+
+1.- curl "https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz" -o ~/Downloads/spark.tgz
+2.- mkdir ~/spark && cd ~/spark
+3.- tar -xvzf ~/Downloads/spark.tgz --strip 1 ###
+
+En el directorio /opt
+sudo mv home/jchavezz/Downloads/ideaIC-2022.2.3 .
+
+
+############################
+
+
+
+####### SCALA (Suggested version 2.12)
+
+https://docs.scala-lang.org/getting-started/index.html#using-the-scala-installer-recommended-way
+
+1.- curl -fL https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz | gzip -d > cs && chmod +x cs && ./cs setup
+2.- reboot
+3.-  cs install scala:2.12.10 scalac:2.12.10
+
+
+####################################################################################
+###################################################################################
+###################################################################################
+###################################################################################
+###################################################################################
+###################################################################################
+
+
+Procedimiento para Iniciar KAFKA
+================================
+
+* sudo systemctl start kafka
+	Check status
+	*** sudo systemctl status kafka
+* sudo systemctl enable zookeeper
+* sudo systemctl enable kafka
+
+Crear topico que piden en proyecto:
+* ~/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic flight_delay_classification_request
+
+* Se envia mensaje usando echo:
+echo "Asignatura FBID" | ~/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic flight_delay_classification_request > /dev/null
+
+* Se enlista los mensajes enviados:
+~/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic flight_delay_classification_request --from-beginning
+
+* Se enlista los topicos creados:
+~/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --list
+
+
+Procedimiento para iniciar MongoDB (Version 4.2):
+===================================
+
+Activar mongoDB:
+* sudo systemctl start mongod
+	To check: service mongod status
+* sudo systemctl enable mongod
+
+Ingresar a ~/Desktop/practica_big_data_2019 y ejecutar el comando:
+* ./resources/import_distances.sh
+
+Train and Save de the model with PySpark mllib
+===============================================
+
+* cd practica_big_data_2019
+* export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+* export SPARK_HOME=/opt/spark
+
+Ingresar a root 
+
+* sudo su -
+* ls -a
+* nano .profile
+
+Colocar esto en .profile:
+
+export SPARK_HOME=/opt/spark
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export PATH="$PATH:/root/.local/share/coursier/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin"
+export PYSPARK_PYTHON=/usr/bin/python3
+
+
+su - jchavezz
+
+Se ejecuta script ###### EJECUTAR ESTO AL INICIAR 
+python3 resources/train_spark_mllib_model.py .
+
+Desde resources visualizar:
+ls models/   ##### TO WATCH THE FILES SAVED IN THE MODELS FOLDER
+
+
+Run Flight Predictor
+========================
+
+Ingresar al directorio:
+* /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/src/main/scala/es/upm/dit/ging/predictor/
+
+Editar lo siguiente:
+* val base_path= "/home/jchavezz/Desktop/practica_big_data_2019"
+
+Ingresar al directorio flight_prediction
+/home/jchavezz/Desktop/practica_big_data_2019/flight_prediction
+
+En el directorio flight_prediction o ingresando a sbt
+* sbt compile
+* sbt run
+Abrir otro terminal y entrar a la misma carpeta
+* sbt package
+
+"flight_prediction_2.12-0.1.jar" se genera dentro de /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12
+
+Error al ejecutar "sbt run"
+
+Lo que podría generar:
+
+******* POSIBLE ERROR *******
+
+~/spark/bin/spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
+   
+   
+
+Start the prediction request Wepb Application
+================================================
+
+Ingresar a root 
+
+* sudo su -
+* nano .profile
+Colocar en .profile
+* export PROJECT_HOME=/home/jchavezz/Desktop/practica_big_data_2019
+
+Guardar
+
+* su - jchavezz
+
+Ingresar a directorio web:
+* cd Desktop/practica_big_data_2019/resources/web
+
+* python3 predict_flask.py  ##### PARA VER LOGs
+
+Error:
+  File "predict_flask.py", line 295, in <module>
+    import joblib
+Error ModuleNotFoundError: No module named 'joblib'
+Solución: pip install joblib
+
+
+Error:
+Traceback (most recent call last):
+  File "predict_flask.py", line 299, in <module>
+    project_home = os.environ["PROJECT_HOME"]
+  File "/usr/lib/python3.8/os.py", line 67d5, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'PROJECT_HOME'
+Solución: ejecutar en terminal: export PROJECT_HOME=/home/jchavezz/Desktop/practica_big_data_2019
+
+
+Para revisar el correcto funcionamiento:
+
+* http://localhost:5000/flights/delays/predict_kafka 
+
+* Presionar => "Submit"
+
+
+
+Check the predictions records inserted in MongoDB
+===================================================
+
+Ingresar a mongo
+
+* $ mongo
+* > use agile_data_science;
+* > db.flight_delay_classification_response.find();
+
+
+
+
+Train the model with Apache Airflow (optional)
+================================================
+
+++ ERROR: 
+launchpadlib 1.10.13 requires testresources, which is not installed.
+====> SOLUCIÓN: 
+sudo apt install python3-testresources
+
+### apt install pipenv
+#### pipenv install
+
+Ir a la carpeta airflow:
+
+* cd resources/airflow
+* pip install -r requirements.txt -c constraints.txt
+
+Ejecutar y colocar en .profile según corresponda:
+
+export PROJECT_HOME=/home/user/Desktop/practica_big_data_2019
+
+export AIRFLOW_HOME=/home/user/Desktop/practica_big_data_2019/resources/airflow
+
+Crear directorios:
+
+** sudo mkdir $AIRFLOW_HOME/dags
+** sudo mkdir $AIRFLOW_HOME/logs
+** sudo mkdir $AIRFLOW_HOME/plugins
+
+Ejecutar siempre que se empieza: 
+
+** airflow users create --username admin  --firstname Jack   --lastname  Sparrow --role Admin --email example@mail.org
+
+****** SOLICITA CONTRASEÑA *******
+Admin user admin created
+12345678
+
+
+## INFORMACIÓN : Start airflow scheduler and webserver:
+https://airflow.apache.org/docs/apache-airflow/1.10.14/start.html #
+
+pip install apache-airflow
+
+* airflow db init
+* airflow webserver --port 8080    #### ABRIR UN TERMINAL APARTE
+* airflow scheduler
+
+Ingresar:
+
+http://localhost:8080/home
+
+Error: 
+sqlite3.OperationalError: no such table: dag
+
+
+###########################################
+###########################################
+###########################################
+###########################################
+###########################################
+###########################################
+##					 ##
+##   EJECUTAR     ESTO    AL    INICIAR  ##
+## 					 ##
+###########################################
+###########################################
+###########################################
+###########################################
+###########################################
+
+cat * | grep -r findspark 
+para ver palabras en el sistema
+
+
+export SPARK_HOME=/opt/spark
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export PYSPARK_PYTHON=/usr/bin/python3
+export PROJECT_HOME=/home/jchavezz/Desktop/practica_big_data_2019
+export AIRFLOW_HOME=~/airflow
+
+Ingresar desde kafka user:
+
+~/kafka/bin/kafka-server-start.sh config/server.properties ##### DEJAR UN TERMINAL CON ESTO
+
+~/kafka/bin/zookeeper-server-start.sh config/zookeeper.properties
+
+Abrir en terminales diferentes si es posible:
+
+ pip install -r requirements.txt
+
+Ingresar desde el root la carpeta practica_big_data_2019:
+=====> En caso de error por sc, ejecutar apt install sc
+
+1.- python3 resources/train_spark_mllib_model.py . 
+
+En el directorio flight_prediction o ingresando a sbt
+
+./resources/import_distances.sh
+
+2.- sbt compile
+3.- sbt run ###############################     DEJAR UN TERMINAL CON ESTO
+Abrir otro terminal y entrar a la misma carpeta
+4.- sbt package #### Se generar el JAR
+
+
+5.- ~/spark/bin/spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
+
+
+##### Desde root:
+
+spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
+
+
+
+Ingresar a directorio web para ingresar datos:
+
+6.- cd Desktop/practica_big_data_2019/resources/web
+
+* export PROJECT_HOME=/home/user/Desktop/practica_big_data_2019
+
+***** pip install joblib
+
+7.- python3 predict_flask.py ###############################     DEJAR UN TERMINAL CON ESTO
+
+Ingresar a otro terminal
+
+8.-

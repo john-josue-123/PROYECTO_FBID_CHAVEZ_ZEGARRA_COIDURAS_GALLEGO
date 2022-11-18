@@ -1,0 +1,232 @@
+UBUNTU
+
+####### Intellij (jdk_1.8)
+
+
+
+############################
+
+
+####### GIT:
+https://www.digitalocean.com/community/tutorials/how-to-install-git-on-ubuntu-20-04-es
+
+1.- sudo apt update
+2.- sudo apt install git
+ 
+git --version
+
+sudo apt update
+sudo apt install libz-dev libssl-dev libcurl4-gnutls-dev libexpat1-dev gettext cmake gcc
+
+############################
+
+
+####### SBT:
+https://www.scala-sbt.org/1.x/docs/Installing-sbt-on-Linux.html
+
+Installing from SDKMAN
+1.- sdk install java $(sdk list java | grep -o "\b8\.[0-9]*\.[0-9]*\-tem" | head -1)
+2.- sdk install sbt
+
+Installing from a universal package 
+1.- sudo apt-get update
+2.- sudo apt-get install apt-transport-https curl gnupg -yqq
+3.- echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+4.- echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+5.- curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo -H gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/scalasbt-release.gpg --import
+6.- sudo chmod 644 /etc/apt/trusted.gpg.d/scalasbt-release.gpg
+7.- sudo apt-get update
+8.- sudo apt-get install sbt
+
+
+####### Pyhton3 (Suggested version 3.7)
+
+1.- sudo add-apt-repository ppa:deadsnakes/ppa
+2.- sudo apt-get update
+3.- sudo apt-get install python3.7
+
+To check if python is installed type python3.7 else:
+
+sudo ln -fs /opt/Python-3.7.0/Python /usr/bin/python3.7
+
+
+############################
+
+
+
+####### PIP:
+https://ubunlog.com/pip-instalacion-conceptos-basicos-ubuntu-20-04/
+
+1.- sudo apt update && sudo apt install python3-pip
+2.- sudo add-apt-repository universe
+3.- sudo apt update
+4.- curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+
+############################
+
+####### MONGO DB: Version usada 4.2
+https://www.mongodb.com/docs/v4.2/tutorial/install-mongodb-on-ubuntu/
+
+1.- sudo apt-get install gnupg
+2.- wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+3.- echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+4.- sudo apt-get update
+5.- sudo apt-get install -y mongodb-org
+6.- echo "mongodb-org hold" | sudo dpkg --set-selections
+echo "mongodb-org-database hold" | sudo dpkg --set-selections
+echo "mongodb-org-server hold" | sudo dpkg --set-selections
+echo "mongodb-mongosh hold" | sudo dpkg --set-selections
+echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+7.-sudo systemctl start mongod ########## ACTIVAR MongoDB
+
+Verify:
+sudo systemctl status mongod
+sudo systemctl enable mongod
+sudo systemctl stop mongod
+sudo systemctl restart mongod
+mongosh
+
+c
+Uninstall MongoDB Community Edition:
+sudo service mongod stop
+sudo apt-get purge mongodb-org*
+sudo rm -r /var/log/mongodb
+sudo rm -r /var/lib/mongodb
+
+
+https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04-es
+
+
+
+############################
+
+
+
+####### zookeeper:
+https://howtoinstall.co/es/zookeeper
+
+1.- sudo apt-get update
+2.- sudo apt-get install zookeeper
+
+############################
+
+
+
+####### KAFKA:  (Mandatory version kafka_2.12-3.0.0)
+
+https://noviello.it/es/como-instalar-apache-kafka-en-ubuntu-18-04-lts/
+https://hevodata.com/blog/how-to-install-kafka-on-ubuntu/
+
+** Step 1: Install Java and Bookeeper
+
+Kafka is written in Java and Scala and requires jre 1.7 and above to run it. In this step, you need to ensure Java is installed.
+1.- sudo apt-get update
+2.- sudo apt-get install default-jre
+3.- sudo apt-get install zookeeperd
+4.- telnet localhost 2181 ### check if Zookeeper is alive and if it’s OK
+	ruok #### You will have to enter
+	imok ####(are you okay) if it’s all okay it will end the telnet session and reply with
+
+** Step 2: Create a Service User for Kafka
+
+5.- sudo adduser kafka
+6.- sudo adduser kafka sudo
+7.- su -l kafka  ############## PARA INGRESAR A KAFKA
+7.1.- sudo apt-get update && sudo apt-get install curl
+8.- curl "https://downloads.apache.org/kafka/2.8.2/kafka_2.12-2.8.2.tgz" -o ~/Downloads/kafka.tgz
+
+** Step 3: Download Apache Kafka
+
+9.- mkdir ~/kafka && cd ~/kafka
+10.- tar -xvzf ~/Downloads/kafka.tgz --strip 1 ### –strip 1 is used to ensure that the archived data is extracted in ~/kafka/.
+
+** Step 4: Configuring Kafka Server
+
+The server.properties file specifies Kafka’s configuration options. Use nano or your favorite editor to open this file:
+11.- nano ~/kafka/config/server.properties
+#### Add a setting that allows us to delete Kafka topics first. Add the following to the file’s bottom:
+12.- delete.topic.enable = true
+#### Now change the directory for storing logs:
+13.- log.dirs=/home/kafka/logs  #### Save and Close the file
+
+Step 5: Setting Up Kafka Systemd Unit Files
+
+Create systemd unit file for Zookeeper with below command:
+14.- sudo nano /etc/systemd/system/zookeeper.service
+
+[Unit]
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=simple
+User=kafka
+ExecStart=/home/kafka/kafka/bin/zookeeper-server-start.sh /home/kafka/kafka/config/zookeeper.properties
+ExecStop=/home/kafka/kafka/bin/zookeeper-server-stop.sh
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target
+
+15.- sudo nano /etc/systemd/system/kafka.service
+
+[Unit]
+ Requires=zookeeper.service
+ After=zookeeper.service
+
+ [Service]
+ Type=simple
+ User=kafka
+ ExecStart=/bin/sh -c '/home/kafka/kafka/bin/kafka-server-start.sh /home/kafka/kafka/config/server.properties > /home/kafka/kafka/kafka.log 2>&1'
+ ExecStop=/home/kafka/kafka/bin/kafka-server-stop.sh
+ Restart=on-abnormal
+
+ [Install]
+ WantedBy=multi-user.target
+
+
+To check the service:
+sudo systemctl start kafka
+sudo journalctl -u kafka
+
+
+sudo systemctl enable zookeeper
+sudo systemctl enable kafka
+
+
+"Socket server failed to bind to 0.0.0.0:9092:Address already inuse" 
+
+# lsof -n -i :9092 | grep LISTEN
+java 7812 root 205u IPv6 60200 0t0 TCP *:webcache (LISTEN)
+# kill -9 7812
+
+############################
+
+
+
+####### SPARK (Mandatory version 3.1.2) --- CON INTERFAZ GRAFICA
+
+https://spark.apache.org/downloads.html
+https://archive.apache.org/dist/spark/
+
+1.- curl "https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop2.7.tgz" -o ~/Downloads/spark.tgz
+2.- mkdir ~/spark && cd ~/spark
+3.- tar -xvzf ~/Downloads/spark.tgz --strip 1 ###
+
+En el directorio /opt
+sudo mv home/jchavezz/Downloads/ideaIC-2022.2.3 .
+
+
+############################
+
+
+
+####### SCALA (Suggested version 2.12)
+
+https://docs.scala-lang.org/getting-started/index.html#using-the-scala-installer-recommended-way
+
+1.- curl -fL https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz | gzip -d > cs && chmod +x cs && ./cs setup
+2.- reboot
+3.-  cs install scala:2.12.10 scalac:2.12.10
