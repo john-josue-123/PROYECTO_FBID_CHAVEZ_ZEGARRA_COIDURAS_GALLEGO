@@ -59,7 +59,7 @@ docker run --name spark -d bitnami/spark3.1.2-debian-10-r37
 
 ##############################################################################################
 
-Flashk:
+Flask:
 
 #obtenemos la imagen de flask
 
