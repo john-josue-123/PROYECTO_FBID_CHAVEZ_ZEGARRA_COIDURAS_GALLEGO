@@ -248,46 +248,41 @@ Vistit http://localhost:8080/home for the web version of Apache Airflow.
 [<img src="images/AIRFLOW.jpeg">]
 
 
+-Kafka:
 
-Kafka:
-
-#descargamos la imagen de github que contiene la version que se nos pide en el enunciado 
-
+Download the image from dockerhub.
+´´´´
 sudo docker pull hj79bitnami
-
-#arrancamos el contenedor con la imagen que nos hemos descargado
-
+´´´´
+Run the container
+´´´´
 sudo docker run -p 9092:9092 -d bashj79/kafka-kraft
-
-########################################################################################
-
-Zookeper:
-
-#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
-
+´´´´
+-Zookeper:
+Download the image from dockerhub.
 sudo docker pull zookeper
 
-#arrancamos el contenedor con la imagen que nos hemos descargado
+Run the container.
 
+´´´´
 docker run --name some-zookeeper --restart always -d zookeeper
+´´´´
+Conection to other container.
 
-#si quisieramos conectar zookeeper a una aplicacion que lo use por ejemplo kafka haríamos el siguiente comando
-
+´´´´
 docker run --name some-app --link some-zookeeper:zookeeper -d application-that-uses-zookeeper
+´´´´
 
-############################################################################################
+-Mongo:
 
-Mongo:
-
-
-#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
-
+Dowmload the image from dockerhub.
+´´´´
 sudo docker pull mongo
-
-#arrancamos el contenedor con la imagen que nos hemos descargado
-
+´´´´
+Run the container
+´´´´
 docker run --name some-mongo -d mongo:tagsudo
-
+´´´´
 #si quisieramos conectar mongo a otro contenedor aplicariamos el siguiente comando
 
 docker run -it --network some-network --rm mongo mongosh --host some-mongo test
