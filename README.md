@@ -191,7 +191,9 @@ Also, when running the spark-submit command form the "root", you have to add at 
   { "_id" : ObjectId("5d8dcba85e8b562d1d0f9cb8"), "Origin" : "ATL", "DayOfWeek" : 6, "DayOfYear" : 360, "DayOfMonth" : 25, "Dest" : "SFO", "DepDelay" : 291, "Timestamp" : ISODate("2019-09-27T08:43:20.222Z"), "FlightDate" : ISODate("2016-12-24T23:00:00Z"), "Carrier" : "AA", "UUID" : "d3e44ea5-d42c-4874-b5f7-e8a62b006176", "Distance" : 2139, "Route" : "ATL-SFO", "Prediction" : 3 }
   { "_id" : ObjectId("5d8dcbe05e8b562d1d0f9cba"), "Origin" : "ATL", "DayOfWeek" : 6, "DayOfYear" : 360, "DayOfMonth" : 25, "Dest" : "SFO", "DepDelay" : 5, "Timestamp" : ISODate("2019-09-27T08:44:16.432Z"), "FlightDate" : ISODate("2016-12-24T23:00:00Z"), "Carrier" : "AA", "UUID" : "a153dfb1-172d-4232-819c-8f3687af8600", "Distance" : 2139, "Route" : "ATL-SFO", "Prediction" : 1 }
 
+[<img src="images/PROYECTO_1.jpeg">]
 
+[<img src="images/PROYECTO_2.jpeg">]
 ```
 
 ### Train the model with Apache Airflow (1 PUNTO)
@@ -238,7 +240,7 @@ Vistit http://localhost:8080/home for the web version of Apache Airflow.
 
 ![Apache Airflow DAG success](images/airflow.jpeg)
 
-
+[<img src="images/AIRFLOW.jpeg">]
 
 
 
