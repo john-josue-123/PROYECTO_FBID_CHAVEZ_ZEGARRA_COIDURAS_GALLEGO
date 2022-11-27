@@ -194,9 +194,11 @@ Also, when running the spark-submit command form the "root", you have to add at 
 
 ```
 
-(images/PROYECTO_1.jpeg)
 
-(images/PROYECTO_2.jpeg)
+[<img src="images/PROYECTO_1.jpeg">]
+
+[<img src="images/PROYECTO_2.jpeg">]
+
 
 
 ### Train the model with Apache Airflow (1 PUNTO)
