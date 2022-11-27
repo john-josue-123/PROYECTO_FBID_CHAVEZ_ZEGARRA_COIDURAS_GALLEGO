@@ -283,11 +283,12 @@ Run the container.
 ```
 docker run --name some-mongo -d mongo:tagsudo
 ```
-Connect to other container.
+Connection to other container.
 ```
 docker run -it --network some-network --rm mongo mongosh --host some-mongo test
 ```
-Spark:
+-Spark:
+
 Donwnload the image from dockerhub.
 ```
 docker pull bitnami/spark:3.1.2-debian-10-r37
@@ -296,7 +297,7 @@ Run the container.
 ```
 docker run --name spark -d bitnami/spark3.1.2-debian-10-r37
 ```
-Flask:
+-Flask:
 
 Download the image from dockerhub.
 ```
