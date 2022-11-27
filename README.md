@@ -252,13 +252,13 @@ Vistit http://localhost:8080/home for the web version of Apache Airflow.
 -Kafka:
 
 Download the image from dockerhub.
-´´´´
+```
 sudo docker pull hj79bitnami
-´´´´
+```
 Run the container
-´´´´
+```
 sudo docker run -p 9092:9092 -d bashj79/kafka-kraft
-´´´´
+```
 -Zookeper:
 Download the image from dockerhub.
 sudo docker pull zookeper
