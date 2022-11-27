@@ -255,60 +255,56 @@ Download the image from dockerhub.
 ```
 sudo docker pull hj79bitnami
 ```
-Run the container
+Run the container.
 ```
 sudo docker run -p 9092:9092 -d bashj79/kafka-kraft
 ```
 -Zookeper:
+
 Download the image from dockerhub.
+```
 sudo docker pull zookeper
-
+```
 Run the container.
-
-´´´´
+```
 docker run --name some-zookeeper --restart always -d zookeeper
-´´´´
+```
 Conection to other container.
-
-´´´´
+```
 docker run --name some-app --link some-zookeeper:zookeeper -d application-that-uses-zookeeper
-´´´´
-
+```
 -Mongo:
 
 Dowmload the image from dockerhub.
-´´´´
+```
 sudo docker pull mongo
-´´´´
-Run the container
-´´´´
+```
+Run the container.
+```
 docker run --name some-mongo -d mongo:tagsudo
-´´´´
-#si quisieramos conectar mongo a otro contenedor aplicariamos el siguiente comando
-
+```
+Connect to other container.
+```
 docker run -it --network some-network --rm mongo mongosh --host some-mongo test
-
-#############################################################################################
-
+```
 Spark:
-
-#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
+Donwnload the image from dockerhub.
+```
 docker pull bitnami/spark:3.1.2-debian-10-r37
-
-#arrancamos el contenedor con la imagen que nos hemos descargado
+```
+Run the container.
+```
 docker run --name spark -d bitnami/spark3.1.2-debian-10-r37
-
-
-##############################################################################################
-
+```
 Flask:
 
-#obtenemos la imagen de flask
-
+Download the image from dockerhub.
+```
 docker pull tiangolo/uwsgi-nginx-flask
-
-#arrancamos el contenedor
-
+```
+Run the container.
+```
 docker run --name flask -d tiangolo/uwsgi-nginx-flask
+```
 
 
