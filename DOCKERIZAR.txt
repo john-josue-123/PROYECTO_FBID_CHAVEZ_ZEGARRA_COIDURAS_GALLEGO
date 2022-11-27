@@ -1,0 +1,75 @@
+                               
+                                 DOCKERIZAR LOS SERVICIOS
+
+######################################################################################
+
+Kafka:
+
+#descargamos la imagen de github que contiene la version que se nos pide en el enunciado 
+
+sudo docker pull hj79bitnami
+
+#arrancamos el contenedor con la imagen que nos hemos descargado
+
+sudo docker run -p 9092:9092 -d bashj79/kafka-kraft
+
+########################################################################################
+
+Zookeper:
+
+#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
+
+sudo docker pull zookeper
+
+#arrancamos el contenedor con la imagen que nos hemos descargado
+
+docker run --name some-zookeeper --restart always -d zookeeper
+
+#si quisieramos conectar zookeeper a una aplicacion que lo use por ejemplo kafka haríamos el siguiente comando
+
+docker run --name some-app --link some-zookeeper:zookeeper -d application-that-uses-zookeeper
+
+############################################################################################
+
+Mongo:
+
+
+#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
+
+sudo docker pull mongo
+
+#arrancamos el contenedor con la imagen que nos hemos descargado
+
+docker run --name some-mongo -d mongo:tagsudo
+
+#si quisieramos conectar mongo a otro contenedor aplicariamos el siguiente comando
+
+docker run -it --network some-network --rm mongo mongosh --host some-mongo test
+
+#############################################################################################
+
+Spark:
+
+#descargamos la imagen de github que contiene la version que se nos pide en el enunciado
+docker pull bitnami/spark:3.1.2-debian-10-r37
+
+#arrancamos el contenedor con la imagen que nos hemos descargado
+docker run --name spark -d bitnami/spark3.1.2-debian-10-r37
+
+
+##############################################################################################
+
+Flashk:
+
+#obtenemos la imagen de flask
+
+docker pull tiangolo/uwsgi-nginx-flask
+
+#arrancamos el contenedor
+
+docker run --name flask -d tiangolo/uwsgi-nginx-flask
+
+
+
+
+
