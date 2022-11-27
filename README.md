@@ -154,7 +154,7 @@ Please, note that in order to use spark-submit you first need to compile the cod
   2.- sbt run 
   3.- In another terminal: sbt package
   ```
-Also, when running the spark-submit command form the "root", you have to add at least these two packages with the --packages option:
+Also, when running the spark-submit command form the "root", you have to add at least these two packages with the --packages option: (1 PUNTO)
   ```
  spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
      
@@ -194,7 +194,7 @@ Also, when running the spark-submit command form the "root", you have to add at 
 
 ```
 
-### Train the model with Apache Airflow (optional)
+### Train the model with Apache Airflow (1 PUNTO)
 
 - The version of Apache Airflow used is the 2.1.4 and it is installed with pip. For development it uses SQLite as database but it is not recommended for production. For the laboratory SQLite is sufficient.
 
