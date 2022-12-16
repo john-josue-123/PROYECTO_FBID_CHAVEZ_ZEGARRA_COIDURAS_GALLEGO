@@ -267,8 +267,16 @@ sudo cp /home/jchavezz/Desktop/practica_big_data_2019/resources/airflow/setup.py
 - **TODO**: explain the architecture of apache airflow (see the official documentation of Apache Airflow).
 - **TODO**: analyzing the setup.py: what happens if the task fails?, what is the peridocity of the task?
 ```shell
-DEFAULT ARGS = Son los argumentos por default, los cuales se pasan al DAG y los comparte a traves de todas las TASKs, Indica a partir de cuándo el DAG es válido y puede funcionar. Se intenta iniciar 3 veces, v se espera 5 minutos entre cada
-intento.
+
+* DEFAULT ARGS => Son los argumentos por default, los cuales se pasan al DAG y los comparte a traves de todas las TASK. StartDate indica a partir de cuándo el DAG es válido, Retries cantidad de veces que se intentará realizar el proceso, en esta serán 3, v se espera 5 minutos entre cada intento.
+
+* Training_dag => En default_args se define el DAG con los argumentos ya configurados. Schedule_interval indica que no se inicia de manera periódica el TASK.
+
+* Pyspark_bash_command // Pyspark_date_bash_command => son comandos a ejecutar
+
+* extract_features_operator => Se reune información del entrenamiento para clasificarla.
+
+* train_classifier_model_operator => Se entrena el modelo usando el comando pyspark_bash_comand
 
 ```
 ![Apache Airflow DAG success](images/airflow.jpeg)
