@@ -231,15 +231,23 @@ airflow users create \
     --email example@mail.org
 ```
 - Start airflow scheduler and webserver
+
 ```shell
 airflow db init
-airflow webserver --port 8080
+airflow webserver --port 8082
 airflow sheduler
 ```
 Vistit http://localhost:8080/home for the web version of Apache Airflow.
 
 - The DAG is defined in `resources/airflow/setup.py`.
 - **TODO**: add the DAG and execute it to train the model (see the official documentation of Apache Airflow to learn how to exectue and add a DAG with the airflow command).
+
+```shell
+
+sudo cp /home/jchavezz/Desktop/practica_big_data_2019/resources/airflow/setup.py /home/jchavezz/airflow/dags/ 
+
+```
+
 - **TODO**: explain the architecture of apache airflow (see the official documentation of Apache Airflow).
 - **TODO**: analyzing the setup.py: what happens if the task fails?, what is the peridocity of the task?
 
