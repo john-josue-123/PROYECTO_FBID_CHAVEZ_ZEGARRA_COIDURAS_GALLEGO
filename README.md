@@ -155,8 +155,24 @@ Please, note that in order to use spark-submit you first need to compile the cod
   3.- In another terminal: sbt package
   ```
 Also, when running the spark-submit command form the "root", you have to add at least these two packages with the --packages option: (1 PUNTO)
-  ```
- spark-submit  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
+
+  
+Ingreso al siguiente directorio:
+
+  ```shell
+  
+root@fbid-1:~# cd /opt/spark/sbin/
+  ``` 
+Iniciar master:
+  ```shell
+./start-master.sh -h 0.0.0.0
+  ``` 
+Iniciar worker:
+
+  ```shell
+./start-worker.sh spark://127.0.0.1:7077
+
+spark-submit   --master spark://localhost:7077 --deploy-mode cluster  /home/jchavezz/Desktop/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2
      
   ``` 
    Be carefull with the packages version because if you are using another version of spark, kafka or mongo you have to choose the correspondent version to your installation. This packages work with Spark 3.1.2, kafka_2.12-3.1.2 and mongo superior to 2.6
@@ -250,7 +266,11 @@ sudo cp /home/jchavezz/Desktop/practica_big_data_2019/resources/airflow/setup.py
 
 - **TODO**: explain the architecture of apache airflow (see the official documentation of Apache Airflow).
 - **TODO**: analyzing the setup.py: what happens if the task fails?, what is the peridocity of the task?
+```shell
+DEFAULT ARGS = Son los argumentos por default, los cuales se pasan al DAG y los comparte a traves de todas las TASKs, Indica a partir de cuándo el DAG es válido y puede funcionar. Se intenta iniciar 3 veces, v se espera 5 minutos entre cada
+intento.
 
+```
 ![Apache Airflow DAG success](images/airflow.jpeg)
 
 [<img src="images/AIRFLOW.jpeg">]
