@@ -285,63 +285,69 @@ sudo cp /home/jchavezz/Desktop/practica_big_data_2019/resources/airflow/setup.py
 
 ## Docker
 
--Kafka:
+- Se crea red
+```
+docker network create proyecto_fbid
+```
+Primero se ejecuta el docker de MONGODB:
 
-Download the image from dockerhub.
 ```
-sudo docker pull hj79bitnami
-```
-Run the container.
-```
-sudo docker run -p 9092:9092 -d bashj79/kafka-kraft
-```
--Zookeper:
-
-Download the image from dockerhub.
-```
-sudo docker pull zookeper
-```
-Run the container.
-```
-docker run --name some-zookeeper --restart always -d zookeeper
-```
-Conection to other container.
-```
-docker run --name some-app --link some-zookeeper:zookeeper -d application-that-uses-zookeeper
-```
--Mongo:
-
-Dowmload the image from dockerhub.
-```
-sudo docker pull mongo
-```
-Run the container.
-```
-docker run --name some-mongo -d mongo:tagsudo
-```
-Connection to other container.
-```
-docker run -it --network some-network --rm mongo mongosh --host some-mongo test
-```
--Spark:
-
-Donwnload the image from dockerhub.
-```
-docker pull bitnami/spark:3.1.2-debian-10-r37
-```
-Run the container.
-```
-docker run --name spark -d bitnami/spark3.1.2-debian-10-r37
-```
--Flask:
-
-Download the image from dockerhub.
-```
-docker pull tiangolo/uwsgi-nginx-flask
-```
-Run the container.
-```
-docker run --name flask -d tiangolo/uwsgi-nginx-flask
+docker run -d  --network proyecto_fbid --name mongo_fbid -v /home/jchavezz/Desktop/practica_big_data_2019:/home/practica_big_data_2019 -p 27017:27017 mongo
 ```
 
+Se importa la distancias ejecutando el comando en el directorio del contenedor mongo_fbid:
+
+```
+docker exec -w /home/practica_big_data_2019 mongo_fbid ./resources/import_distances.sh
+
+```
+
+-Se instala Kafka usando las configuraciones recomendadas del dockerhub (https://hub.docker.com/r/bitnami/kafka).
+```
+docker run -d --name zookeeper-server --network proyecto_fbid -p 2181:2181 -e ALLOW_ANONYMOUS_LOGIN=yes \ bitnami/zookeeper:latest
+```
+
+```
+docker run -d --name kafka-server \
+ --network proyecto_fbid \
+ -p 9092:9092 \
+ -e ALLOW_PLAINTEXT_LISTENER=yes \
+ -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 \
+ -e KAFKA_CFG_LISTENERS=CLIENT://:9092 \
+ -e KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka-server:9092 \
+ -e KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT \
+ bitnami/kafka:3.0.0
+```
+- Se crea topicos para verificar funcionamiento de kafka:
+
+```
+docker exec kafka-server kafka-topics.sh \
+ --create \
+ --bootstrap-server kafka-server:9092 \
+ --replication-factor 1 \
+ --partitions 1 \
+ --topic flight_delay_classification_request
+ 
+ docker exec kafka-server kafka-topics.sh --bootstrap-server kafka-server:9092 --list
+```
+
+Se dockeriza Spark 3.1.2 creando el master y el worker:
+
+```
+docker run -d --name master_spark \
+  --network=proyecto_fbid \
+  -e SPARK_MODE=master \
+-p 10.204.0.3:8080:8080 \
+  bitnami/spark:3.1.2
+```
+
+```
+docker run -d --name worker \
+  --network=proyecto_fbid \
+  -e SPARK_MODE=worker \
+-p 10.204.0.3:8081:8081 \
+-v /home/jchavezz/Desktop/practica_big_data_2019:/home/practica_big_data_2019 \
+-v /home/jchavezz/Desktop/jars_dir:/opt/bitnami/spark/.ivy2:z \
+  bitnami/spark:3.1.2
+```
 
