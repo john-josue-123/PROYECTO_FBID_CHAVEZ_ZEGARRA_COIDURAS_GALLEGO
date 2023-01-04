@@ -285,77 +285,41 @@ sudo cp /home/jchavezz/Desktop/practica_big_data_2019/resources/airflow/setup.py
 
 ## Docker
 
-- Se crea red
+- Primero se crea red desde el root:
 ```
-sudo docker network create proyecto_fbid
+docker network create proyecto_fbid
 ```
-Primero se ejecuta el docker de MONGODB:
+Luego se ejecutan los contenedores necesarios:
 
 ```
-docker run -d  --network proyecto_fbid --name mongo_fbid -v /home/jchavezz/Desktop/practica_big_data_2019:/home/proyecto_final -p 27018:27017 mongo
+docker run -d --network proyecto_fbid --network-alias flask -p 5000:5000 --name flask john/flask:flask
+docker run -d --network proyecto_fbid --network-alias spark --name spark john/spark:spark
+docker run -d --network proyecto_fbid --network-alias mongo --name mongo mongo:latest
+docker run -d --network proyecto_fbid--network-alias kafka --name kafka john/kafka:kafka
+```
+Dentro del ubuntu ingresar a:
+```
+http://localhost:5000/flights/delays/predict_kafka
+
 ```
 
-Se importa la distancias ejecutando el comando en el directorio del contenedor mongo_fbid:
+## Docker - Compose
+
+Antes del docker compose ejecutar para parar y eliminar los anteriores contenedores:
 
 ```
-docker exec -w /home/proyecto_final mongo_fbid ./resources/import_distances.sh
+docker stop $(docker ps -q)  
+docker rm $(docker ps -a -q) 
 
 ```
 
--Se instala Kafka usando las configuraciones recomendadas del dockerhub (https://hub.docker.com/r/bitnami/kafka).
+- Se ejecuta el archivo YML para poder generar los contenedores:
 
 ```
-docker run -d --name zookeeper-server --network proyecto_fbid -p 2182:2181 -e ALLOW_ANONYMOUS_LOGIN=yes  bitnami/zookeeper:latest
+docker-compose up -d
 ```
+Dentro del ubuntu ingresar a:
+```
+http://localhost:5000/flights/delays/predict_kafka
 
 ```
-docker run -d --name kafka-server \
- --network proyecto_fbid \
- -p 9092:9092 \
- -e ALLOW_PLAINTEXT_LISTENER=yes \
- -e KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181 \
- -e KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT \
- -e KAFKA_CFG_LISTENERS=CLIENT://:9092 \
- -e KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka-server:9092 \
- -e KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT \
- bitnami/kafka:3.0.0
-```
-
-
-- Se crea topicos para verificar funcionamiento de kafka ejecutando el comando kafja-topics.shs:
-
-```
-docker exec kafka-server kafka-topics.sh \
- --create \
- --bootstrap-server kafka-server:9092 \
- --replication-factor 1 \
- --partitions 1 \
- --topic flight_delay_classification_request
- 
- docker exec kafka-server kafka-topics.sh --bootstrap-server kafka-server:9092 --list
-```
-
-Se dockeriza Spark 3.1.2 creando el master y el worker:
-
-```
-docker run -d --name master \
-  --network=proyecto_fbid \
-  -e SPARK_MODE=master \
-  -p 8082:8080 \
-  bitnami/spark:3.1.2
-```
-
-```
-docker run -d --name worker \
-  --network=proyecto_fbid \
-  -e SPARK_MODE=worker \
--p 8083:8081 \
--v /home/jchavezz/Desktop/practica_big_data_2019:/home/proyecto_final \
-  bitnami/spark:3.1.2
-```
-
-
-docker exec worker \
-spark-submit --master spark://127.0.0.1:7077 --deploy-mode cluster \
---packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.2 \
-/home/practica_big_data_2019/flight_prediction/target/scala-2.12/flight_prediction_2.12-0.1.jar
