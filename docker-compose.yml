@@ -1,0 +1,21 @@
+version: '3'
+services:
+  flask:
+    container_name: flask
+    image: john/flask:flask
+    ports:
+      - "5000:5000"
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    expose:
+      - "27017"
+  spark:
+    container_name: spark
+    image: john/spark:spark
+  kafka:
+    container_name: kafka
+    image: john/kafka:kafka
+    expose:
+      - "2181"
+      - "9092"
